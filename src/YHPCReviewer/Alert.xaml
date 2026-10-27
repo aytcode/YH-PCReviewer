@@ -1,0 +1,29 @@
+<Window x:Class="YHPCReviewer.Alert"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Width="400" SizeToContent="Height" ResizeMode="NoResize"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        WindowStartupLocation="CenterOwner" ShowInTaskbar="False">
+    <!-- macOS uyarısı gibi: ortada simge, kalın başlık, kısa açıklama, sağda varsayılan eylem -->
+    <Border x:Name="Sheet" Margin="24" CornerRadius="14" Background="{DynamicResource CardBg}" BorderBrush="{DynamicResource CardStroke}" BorderThickness="1"
+            Padding="24,24,24,18" RenderTransformOrigin="0.5,0.5">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="30" ShadowDepth="8" Opacity="0.28" />
+        </Border.Effect>
+        <Border.RenderTransform>
+            <ScaleTransform x:Name="SheetScale" />
+        </Border.RenderTransform>
+        <StackPanel>
+            <Grid Width="52" Height="52" HorizontalAlignment="Center">
+                <Border CornerRadius="12" Background="{DynamicResource Accent}" />
+                <TextBlock x:Name="Glyph" Style="{StaticResource Icon}" Text="&#xE90F;" FontSize="24" Foreground="White" HorizontalAlignment="Center" />
+            </Grid>
+            <TextBlock x:Name="TitleText" Style="{StaticResource Headline}" FontSize="15" TextAlignment="Center" TextWrapping="Wrap" Margin="0,16,0,6" />
+            <TextBlock x:Name="MessageText" Style="{StaticResource Secondary}" FontSize="13" TextAlignment="Center" />
+            <UniformGrid x:Name="Buttons" Rows="1" Margin="0,22,0,0">
+                <Button x:Name="CancelButton" Content="Vazgeç" IsCancel="True" Margin="0,0,6,0" Padding="10,8" Click="Cancel_Click" />
+                <Button x:Name="OkButton" Style="{StaticResource FilledButton}" IsDefault="True" Margin="6,0,0,0" Padding="10,8" Click="Ok_Click" />
+            </UniformGrid>
+        </StackPanel>
+    </Border>
+</Window>

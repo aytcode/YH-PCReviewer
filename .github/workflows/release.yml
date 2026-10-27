@@ -1,0 +1,77 @@
+# Sürüm iş akışı: exe, herkesin görebildiği bu depodaki kaynak koddan GitHub'ın kendi
+# sunucularında derlenir. Her dosya için SHA-256 özeti ve GitHub tarafından imzalanan bir
+# "build provenance" (derleme kökeni) kaydı yayınlanır; böylece indirilen exe'nin tam olarak
+# hangi commit'ten, hangi iş akışıyla üretildiği doğrulanabilir.
+name: Release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Sürüm numarası
+        id: ver
+        shell: pwsh
+        run: |
+          $v = "${{ github.ref_name }}".TrimStart('v')
+          if ($v -notmatch '^\d+\.\d+\.\d+') { $v = "0.0.0" }
+          "version=$v" >> $env:GITHUB_OUTPUT
+
+      - name: Derle (tek dosya, .NET kurulumu gerektirmez)
+        run: >
+          dotnet publish src/YHPCReviewer -c Release -r win-x64 --self-contained true
+          -p:PublishSingleFile=true -p:IncludeNativeLibrariesForSelfExtract=true
+          -p:EnableCompressionInSingleFile=true -p:DebugType=none
+          -p:Version=${{ steps.ver.outputs.version }} -o out
+
+      - name: Dosyaları hazırla ve SHA-256 özetlerini hesapla
+        shell: pwsh
+        run: |
+          New-Item -ItemType Directory release | Out-Null
+          Copy-Item out/YHPCReviewer.exe release/YHPCReviewer-win-x64.exe
+          Push-Location release
+          Get-ChildItem -File | ForEach-Object {
+            "{0}  {1}" -f (Get-FileHash $_.Name -Algorithm SHA256).Hash.ToLower(), $_.Name
+          } | Set-Content -Encoding ascii SHA256SUMS.txt
+          Get-Content SHA256SUMS.txt
+          Pop-Location
+
+      - name: Derleme kökenini imzala (GitHub Attestation)
+        uses: actions/attest-build-provenance@v2
+        with:
+          subject-path: release/YHPCReviewer-win-x64.exe
+
+      - name: Sürümü yayınla
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            release/YHPCReviewer-win-x64.exe
+            release/SHA256SUMS.txt
+          body: |
+            ## İndir
+            **[YHPCReviewer-win-x64.exe](https://github.com/${{ github.repository }}/releases/download/${{ github.ref_name }}/YHPCReviewer-win-x64.exe)** — Windows 10/11 (64 bit), kurulum gerekmez.
+
+            ## Doğrulama
+            Bu dosya GitHub Actions tarafından bu depodaki `${{ github.sha }}` commit'inden derlendi ([iş akışı kaydı](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})).
+
+            ```
+            gh attestation verify YHPCReviewer-win-x64.exe --repo ${{ github.repository }}
+            ```
+
+            SHA-256 özeti `SHA256SUMS.txt` dosyasındadır. PowerShell ile kontrol: `Get-FileHash YHPCReviewer-win-x64.exe`

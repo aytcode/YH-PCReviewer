@@ -1,0 +1,31 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!-- Apple sistem renklerinden uyarlanmış koyu tema -->
+    <SolidColorBrush x:Key="WindowBg" Color="#1C1C1E" />
+    <SolidColorBrush x:Key="SidebarBg" Color="#00000000" />
+    <SolidColorBrush x:Key="SidebarSolidBg" Color="#232326" />
+    <Color x:Key="ContentBgColor">#161618</Color>
+    <SolidColorBrush x:Key="ContentBg" Color="#161618" />
+    <SolidColorBrush x:Key="CardBg" Color="#232325" />
+    <SolidColorBrush x:Key="CardStroke" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="Separator" Color="#24FFFFFF" />
+    <SolidColorBrush x:Key="Label" Color="#F5F5F7" />
+    <SolidColorBrush x:Key="SecondaryLabel" Color="#A1A1A6" />
+    <SolidColorBrush x:Key="TertiaryLabel" Color="#6E6E73" />
+    <SolidColorBrush x:Key="Fill" Color="#1AFFFFFF" />
+    <SolidColorBrush x:Key="FillHover" Color="#26FFFFFF" />
+    <SolidColorBrush x:Key="SelectedFill" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="Track" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="Accent" Color="#0A84FF" />
+    <SolidColorBrush x:Key="AccentSoft" Color="#290A84FF" />
+    <SolidColorBrush x:Key="OnAccent" Color="#FFFFFF" />
+    <SolidColorBrush x:Key="Green" Color="#30D158" />
+    <SolidColorBrush x:Key="Orange" Color="#FF9F0A" />
+    <SolidColorBrush x:Key="Red" Color="#FF453A" />
+    <SolidColorBrush x:Key="Teal" Color="#64D2FF" />
+    <SolidColorBrush x:Key="Scrim" Color="#66000000" />
+    <SolidColorBrush x:Key="BubbleUser" Color="#0A84FF" />
+    <SolidColorBrush x:Key="BubbleAssistant" Color="#2C2C2E" />
+    <Color x:Key="ShadowColor">#000000</Color>
+    <system:Double xmlns:system="clr-namespace:System;assembly=mscorlib" x:Key="ShadowOpacity">0.35</system:Double>
+</ResourceDictionary>

@@ -1,0 +1,28 @@
+# Her değişiklikte kodun derlendiğini ve komut satırı analizinin çalıştığını doğrular.
+name: Build
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+      - run: dotnet build src/YHPCReviewer -c Release
+      - name: Arayüzsüz analiz (duman testi)
+        shell: pwsh
+        run: |
+          $exe = Get-ChildItem src/YHPCReviewer/bin/Release -Recurse -Filter YHPCReviewer.exe | Select-Object -First 1
+          $p = Start-Process $exe.FullName -ArgumentList "--report rapor.md" -Wait -PassThru
+          if (-not (Test-Path rapor.md)) { throw "Rapor üretilmedi" }
+          Get-Content rapor.md -TotalCount 12
+          if ($p.ExitCode -notin 0, 2) { throw "Beklenmeyen çıkış kodu $($p.ExitCode)" }

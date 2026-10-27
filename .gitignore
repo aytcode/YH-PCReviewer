@@ -1,0 +1,10 @@
+bin/
+obj/
+dist/
+out/
+release/
+.vs/
+*.user
+*.suo
+branding/bin/
+branding/obj/

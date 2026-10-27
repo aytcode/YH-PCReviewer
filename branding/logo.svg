@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <title>YH PC Reviewer</title>
+  <defs>
+    <linearGradient id="tile" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#121A30"/>
+      <stop offset="1" stop-color="#05070D"/>
+    </linearGradient>
+    <linearGradient id="mark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#46DBFF"/>
+      <stop offset="0.55" stop-color="#1A8CFF"/>
+      <stop offset="1" stop-color="#0A4FE0"/>
+    </linearGradient>
+    <linearGradient id="spark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#F2FCFF"/>
+      <stop offset="1" stop-color="#5FD4FF"/>
+    </linearGradient>
+  </defs>
+  <!-- Koyu kutu -->
+  <path fill="url(#tile)" d="M22,0 L78,0 C90.15,0 100,9.85 100,22 L100,78 C100,90.15 90.15,100 78,100 L22,100 C9.85,100 0,90.15 0,78 L0,22 C0,9.85 9.85,0 22,0 Z"/>
+  <!-- Geometrik V amblemi (iç pencereler oyuk) -->
+  <path fill="url(#mark)" fill-rule="evenodd" d="M10,18 L44,38 L50,56 L56,38 L90,18 L84,50 L70,57 L56,84 L50,90 L44,84 L30,57 L16,50 Z M20,30 L40,42 L43,52 L25,45 Z M80,30 L60,42 L57,52 L75,45 Z"/>
+  <!-- Dört köşeli ışıltı -->
+  <path fill="url(#spark)" d="M50,23 C50.8,29.5 53,32 59,33 C53,34 50.8,36.5 50,43 C49.2,36.5 47,34 41,33 C47,32 49.2,29.5 50,23 Z"/>
+</svg>
